@@ -1,0 +1,212 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(180deg, #bfefff 0%, #dff7ff 55%, #fff7ec 100%);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 30px;
+  padding: 35px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.15);
+  text-align: center;
+}
+
+.logo {
+  font-size: 70px;
+}
+
+h1 {
+  color: #1579b8;
+  margin-top: 10px;
+  font-size: 2.2rem;
+}
+
+h2 {
+  color: #ff7b68;
+  margin-top: 10px;
+}
+
+.sub {
+  color: #666;
+  margin: 15px 0 30px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.stat {
+  background: #f4fbff;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.numero {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1579b8;
+}
+
+.texto {
+  color: #666;
+  margin-top: 6px;
+}
+
+.botao {
+  margin-top: 30px;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 18px;
+  background: #4ab9eb;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.botao:hover {
+  transform: scale(1.03);
+}
+.formulario {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.formulario label {
+  font-weight: bold;
+  color: #555;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cfe8f3;
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.lista-convidados {
+  margin-top: 25px;
+  text-align: left;
+}
+
+.convidado {
+  background: #f4fbff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+}
+
+.convidado p {
+  margin-top: 8px;
+  color: #666;
+}
+.formulario select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cfe8f3;
+  border-radius: 12px;
+  background: white;
+  font-size: 16px;
+}
+
+.resumo-confirmados {
+  margin: 12px 0 18px;
+  color: #388a62;
+  font-weight: bold;
+}
+
+.stat-largo {
+  grid-column: 1 / -1;
+}
+
+.linha-convidado {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.estado {
+  padding: 5px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.estado.confirmado {
+  background: #dff7e8;
+  color: #267247;
+}
+
+.estado.pendente {
+  background: #fff3cf;
+  color: #876500;
+}
+
+.estado.nao-vai {
+  background: #ffe0df;
+  color: #a43e38;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.acoes button {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.editar {
+  background: #dff3ff;
+  color: #1677a8;
+}
+
+.apagar {
+  background: #ffe3e1;
+  color: #a43e38;
+}
+
+.botao-secundario {
+  padding: 12px;
+  border: 1px solid #a9c9d8;
+  border-radius: 14px;
+  background: white;
+  color: #51636c;
+  cursor: pointer;
+}
+
+.botao-voltar {
+  background: #6d8794;
+}

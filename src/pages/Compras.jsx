@@ -73,7 +73,7 @@ function Compras({ convidados }) {
   // =========================
 
   const carnePicada = cima(porcoes * 0.15);
-  const batataPure = cima(porcoes * 0.25);
+  const embalagensPure = Math.ceil(pureInstantaneo / 0.2);
   const leite = cima(porcoes * 0.06);
   const manteiga = Math.ceil(porcoes * 8);
   const cebolas = Math.max(1, Math.ceil(porcoes / 8));
@@ -210,10 +210,10 @@ function Compras({ convidados }) {
         quantidade: `${carnePicada} kg`,
       },
       {
-        id: "batata-pure",
-        categoria: "🥘 Empadão",
-        nome: "Batatas para puré",
-        quantidade: `${batataPure} kg`,
+        id: "pure-instantaneo",
+categoria: "🥘 Empadão",
+nome: "Puré instantâneo em flocos",
+quantidade: `${pureInstantaneo} kg (${embalagensPure} embalagens de 200 g)`,
       },
       {
         id: "leite",
@@ -259,7 +259,7 @@ function Compras({ convidados }) {
     farofa,
     tabuleiros,
     carnePicada,
-    batataPure,
+    embalagensPure,
     leite,
     manteiga,
     cebolas,

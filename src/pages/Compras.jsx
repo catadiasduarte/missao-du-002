@@ -34,8 +34,8 @@ function Compras({ convidados }) {
   // CHURRASCO
   // =========================
 
-  // Cerca de 400 g de carne crua por porção equivalente.
-  const carneTotal = porcoes * 0.4;
+  // Cerca de 300 g de carne crua por porção equivalente.
+  const carneTotal = porcoes * 0.3;
 
   const febrasEntremeada = cima(carneTotal * 0.35);
   const frango = cima(carneTotal * 0.3);
@@ -51,8 +51,8 @@ function Compras({ convidados }) {
   // EMPADÃO
   // =========================
 
-  const carnePicada = cima(porcoes * 0.18);
-  const batataPure = cima(porcoes * 0.3);
+const carnePicada = cima(porcoes * 0.15);
+const batataPure = cima(porcoes * 0.25);
 
   const leite = cima(porcoes * 0.06);
   const manteiga = Math.ceil(porcoes * 8);
@@ -69,7 +69,7 @@ function Compras({ convidados }) {
   // COMUM AOS DOIS MENUS
   // =========================
 
-  const pao = Math.ceil(porcoes * 1.25);
+  const pao = Math.ceil(porcoes * 0.06);
 
   // Batata frita tipo snack/pacote.
   const batatasFritas = cima(porcoes * 0.05);
@@ -83,11 +83,12 @@ function Compras({ convidados }) {
   // BEBIDAS
   // =========================
 
-  // Cerveja em garrafas/latas individuais.
-  const cerveja = Math.ceil(adultos * 2);
+// Refrigerantes/sumos
+const refrigerantes = cima(adultos * 0.20 + criancas * 0.40);
 
-  // Sangria em litros.
-  const sangria = cima(adultos * 0.25);
+// Bebidas alcoólicas
+const cerveja = Math.ceil(adultos * 2); // minis
+const sangria = cima(adultos * 0.12);
 
   return (
     <div className="compras">
@@ -231,7 +232,7 @@ function Compras({ convidados }) {
 
             <div>
               🥖 Pão
-              <strong>{pao} unidades</strong>
+              <strong>{pao} kg</strong>
             </div>
 
             <div>
@@ -252,9 +253,15 @@ function Compras({ convidados }) {
 
           <div className="lista-compras">
             <h3>🍻 Bebidas</h3>
+            <div>
+
+<div>
+  🥤 Refrigerantes / sumos
+  <strong>{refrigerantes} L</strong>
+</div>
 
             <div>
-              🍺 Cerveja
+              🍺 Cerveja (minis)
               <strong>{cerveja} unidades</strong>
             </div>
 

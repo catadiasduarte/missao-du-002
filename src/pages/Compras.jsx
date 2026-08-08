@@ -69,7 +69,7 @@ const batataPure = cima(porcoes * 0.25);
   // COMUM AOS DOIS MENUS
   // =========================
 
-  const pao = Math.ceil(porcoes * 0.06);
+  const pao = cima(porcoes * 0.06);
 
   // Batata frita tipo snack/pacote.
   const batatasFritas = cima(porcoes * 0.05);

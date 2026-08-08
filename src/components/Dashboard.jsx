@@ -7,22 +7,38 @@ function Dashboard({ convidados }) {
     (convidado) => convidado.estado === "pendente"
   );
 
+  const naoVao = convidados.filter(
+    (convidado) => convidado.estado === "nao-vai"
+  );
+
+  const somarPessoas = (lista) =>
+    lista.reduce(
+      (total, convidado) =>
+        total +
+        Number(convidado.adultos || 0) +
+        Number(convidado.criancas || 0) +
+        Number(convidado.bebes || 0),
+      0
+    );
+
   const adultos = confirmados.reduce(
-    (total, convidado) => total + convidado.adultos,
+    (total, convidado) => total + Number(convidado.adultos || 0),
     0
   );
 
   const criancas = confirmados.reduce(
-    (total, convidado) => total + convidado.criancas,
+    (total, convidado) => total + Number(convidado.criancas || 0),
     0
   );
 
   const bebes = confirmados.reduce(
-    (total, convidado) => total + convidado.bebes,
+    (total, convidado) => total + Number(convidado.bebes || 0),
     0
   );
 
   const totalPessoas = adultos + criancas + bebes;
+  const pessoasPendentes = somarPessoas(pendentes);
+  const pessoasNaoVao = somarPessoas(naoVao);
 
   return (
     <>
@@ -54,8 +70,19 @@ function Dashboard({ convidados }) {
         </div>
 
         <div className="stat stat-largo">
-          <div className="numero">{pendentes.length}</div>
-          <div className="texto">Famílias por confirmar</div>
+          <div className="numero">{pessoasPendentes}</div>
+          <div className="texto">
+            Pessoas por confirmar
+            <small>{pendentes.length} famílias</small>
+          </div>
+        </div>
+
+        <div className="stat stat-largo stat-nao-vao">
+          <div className="numero">{pessoasNaoVao}</div>
+          <div className="texto">
+            Pessoas que não vão
+            <small>{naoVao.length} famílias</small>
+          </div>
         </div>
       </div>
     </>

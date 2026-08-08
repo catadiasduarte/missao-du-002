@@ -467,3 +467,17 @@ h2 {
     text-align: center;
   }
 }
+.stat .texto small {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.stat-nao-vao {
+  background: #fff1f1;
+}
+
+.stat-nao-vao .numero {
+  color: #d76a6a;
+}

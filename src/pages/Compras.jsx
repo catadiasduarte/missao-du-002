@@ -22,7 +22,9 @@ function Compras({ convidados }) {
     0
   );
 
-  // Crianças contam como 60% de uma porção de adulto.
+  // 1 adulto = 1 porção
+  // 1 criança = 0,6 porção
+  // bebés não entram no cálculo principal
   const porcoes = adultos + criancas * 0.6;
 
   function cima(valor, casas = 1) {
@@ -34,7 +36,7 @@ function Compras({ convidados }) {
   // CHURRASCO
   // =========================
 
-  // Cerca de 300 g de carne crua por porção equivalente.
+  // Cerca de 300 g de carne por porção equivalente
   const carneTotal = porcoes * 0.3;
 
   const febrasEntremeada = cima(carneTotal * 0.35);
@@ -42,7 +44,6 @@ function Compras({ convidados }) {
   const salsichas = cima(carneTotal * 0.2);
   const outraCarne = cima(carneTotal * 0.15);
 
-  // Acompanhamentos - quantidades em cru.
   const arroz = cima(porcoes * 0.06);
   const feijaoPreto = cima(porcoes * 0.07);
   const farofa = cima(porcoes * 0.035);
@@ -51,17 +52,13 @@ function Compras({ convidados }) {
   // EMPADÃO
   // =========================
 
-const carnePicada = cima(porcoes * 0.15);
-const batataPure = cima(porcoes * 0.25);
-
+  const carnePicada = cima(porcoes * 0.15);
+  const batataPure = cima(porcoes * 0.25);
   const leite = cima(porcoes * 0.06);
   const manteiga = Math.ceil(porcoes * 8);
-
   const cebolas = Math.max(1, Math.ceil(porcoes / 8));
-
   const polpaTomate = Math.ceil(porcoes * 18);
 
-  // Aproximadamente 10 porções por tabuleiro.
   const tabuleiros =
     porcoes > 0 ? Math.max(1, Math.ceil(porcoes / 10)) : 0;
 
@@ -69,26 +66,24 @@ const batataPure = cima(porcoes * 0.25);
   // COMUM AOS DOIS MENUS
   // =========================
 
+  // Cerca de 60 g de pão por porção equivalente
   const pao = cima(porcoes * 0.06);
 
-  // Batata frita tipo snack/pacote.
   const batatasFritas = cima(porcoes * 0.05);
-
   const fruta = cima(porcoes * 0.15);
-
-  // Bolo: cerca de 100 g por porção equivalente.
   const bolo = cima(porcoes * 0.1);
 
   // =========================
   // BEBIDAS
   // =========================
 
-// Refrigerantes/sumos
-const refrigerantes = cima(adultos * 0.20 + criancas * 0.40);
+  // Quantidades intermédias porque nem toda a gente bebe de tudo
+  const refrigerantes = cima(
+    adultos * 0.2 + criancas * 0.4
+  );
 
-// Bebidas alcoólicas
-const cerveja = Math.ceil(adultos * 2); // minis
-const sangria = cima(adultos * 0.12);
+  const cerveja = Math.ceil(adultos * 2); // minis
+  const sangria = cima(adultos * 0.12);
 
   return (
     <div className="compras">
@@ -252,13 +247,12 @@ const sangria = cima(adultos * 0.12);
           </div>
 
           <div className="lista-compras">
-            <h3>🍻 Bebidas</h3>
-            <div>
+            <h3>🍹 Bebidas</h3>
 
-<div>
-  🥤 Refrigerantes / sumos
-  <strong>{refrigerantes} L</strong>
-</div>
+            <div>
+              🥤 Refrigerantes / sumos
+              <strong>{refrigerantes} L</strong>
+            </div>
 
             <div>
               🍺 Cerveja (minis)

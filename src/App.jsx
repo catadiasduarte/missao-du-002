@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+
 import Dashboard from "./components/Dashboard";
 import Convidados from "./pages/Convidados";
+import Compras from "./pages/Compras";
 
 function App() {
   const [pagina, setPagina] = useState("dashboard");
@@ -54,16 +56,18 @@ function App() {
   return (
     <div className="app">
       <div className="card">
+
         <div className="logo">✈️</div>
 
         <h1>Missão DU-002</h1>
+
         <h2>O Duarte faz 2 anos! 🎉</h2>
 
         <p className="sub">
           Bem-vindos ao painel da festa.
         </p>
 
-        {pagina === "dashboard" ? (
+        {pagina === "dashboard" && (
           <>
             <Dashboard convidados={convidados} />
 
@@ -73,8 +77,17 @@ function App() {
             >
               👥 Gerir convidados
             </button>
+
+            <button
+              className="botao botao-compras"
+              onClick={() => setPagina("compras")}
+            >
+              🛒 Lista de Compras
+            </button>
           </>
-        ) : (
+        )}
+
+        {pagina === "convidados" && (
           <>
             <Convidados
               convidados={convidados}
@@ -91,6 +104,20 @@ function App() {
             </button>
           </>
         )}
+
+        {pagina === "compras" && (
+          <>
+            <Compras convidados={convidados} />
+
+            <button
+              className="botao botao-voltar"
+              onClick={() => setPagina("dashboard")}
+            >
+              ⬅️ Voltar ao painel
+            </button>
+          </>
+        )}
+
       </div>
     </div>
   );

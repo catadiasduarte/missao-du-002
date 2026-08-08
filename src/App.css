@@ -210,3 +210,93 @@ h2 {
 .botao-voltar {
   background: #6d8794;
 }
+.botao-compras {
+  background: #f29b72;
+}
+
+.compras h3 {
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: #1677a8;
+}
+
+.resumo-compras {
+  background: #eef9fd;
+  border-radius: 16px;
+  padding: 15px;
+  margin: 18px 0;
+  text-align: left;
+}
+
+.resumo-compras p {
+  margin-top: 8px;
+}
+
+.modo-calculo {
+  background: #fff5dc;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.modo-calculo label {
+  cursor: pointer;
+}
+
+.modo-calculo input {
+  margin-right: 8px;
+}
+
+.seletor-menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.seletor-menu button {
+  padding: 14px 8px;
+  border: 2px solid #d5ebf4;
+  background: white;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.seletor-menu .menu-ativo {
+  background: #4ab9eb;
+  border-color: #4ab9eb;
+  color: white;
+  font-weight: bold;
+}
+
+.lista-compras {
+  text-align: left;
+  margin-top: 18px;
+}
+
+.lista-compras > div {
+  background: #f7fbfd;
+  padding: 12px;
+  margin-bottom: 7px;
+  border-radius: 11px;
+}
+
+.aviso-calculo {
+  margin-top: 22px;
+  padding: 12px;
+  background: #fff8e8;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #666;
+  text-align: left;
+}
+
+.sem-pessoas {
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 14px;
+  background: #f5f5f5;
+  color: #666;
+}

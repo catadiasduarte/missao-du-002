@@ -72,12 +72,15 @@ function Compras({ convidados }) {
   // EMPADÃO
   // =========================
 
-  const carnePicada = cima(porcoes * 0.15);
-  const embalagensPure = Math.ceil(pureInstantaneo / 0.2);
-  const leite = cima(porcoes * 0.06);
-  const manteiga = Math.ceil(porcoes * 8);
-  const cebolas = Math.max(1, Math.ceil(porcoes / 8));
-  const polpaTomate = Math.ceil(porcoes * 18);
+const carnePicada = cima(porcoes * 0.15);
+
+const pureInstantaneo = cima(porcoes * 0.033);
+const embalagensPure = Math.ceil(pureInstantaneo / 0.2);
+
+const leite = cima(porcoes * 0.06);
+const manteiga = Math.ceil(porcoes * 8);
+const cebolas = Math.max(1, Math.ceil(porcoes / 8));
+const polpaTomate = Math.ceil(porcoes * 18);
 
   const tabuleiros =
     porcoes > 0 ? Math.max(1, Math.ceil(porcoes / 10)) : 0;
@@ -212,7 +215,7 @@ function Compras({ convidados }) {
       {
         id: "pure-instantaneo",
 categoria: "🥘 Empadão",
-nome: "Puré instantâneo em flocos",
+nome: "Puré Instantâneo",
 quantidade: `${pureInstantaneo} kg (${embalagensPure} embalagens de 200 g)`,
       },
       {

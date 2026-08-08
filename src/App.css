@@ -318,3 +318,152 @@ h2 {
   color: #267247;
   font-weight: bold;
 }
+.grupo-compras {
+  margin-top: 24px;
+  text-align: left;
+}
+
+.grupo-compras h3 {
+  margin-bottom: 12px;
+}
+
+.item-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 13px;
+  margin-bottom: 8px;
+  background: #f7fbfd;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.item-check input {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.item-nome {
+  display: flex;
+  align-items: center;
+}
+
+.item-nome span {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-nome small {
+  font-size: 11px;
+  color: #899;
+  margin-bottom: 2px;
+}
+
+.item-check strong {
+  white-space: nowrap;
+  color: #1677a8;
+}
+
+.item-comprado {
+  background: #e6f7ed;
+  opacity: 0.8;
+}
+
+.item-comprado .item-nome > span {
+  text-decoration: line-through;
+}
+
+.botao-pdf {
+  margin-top: 24px;
+  background: #f29b72;
+}
+
+.cabecalho-impressao,
+.resumo-menu-impressao {
+  display: none;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  .app {
+    min-height: auto !important;
+    background: white !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    padding: 20px !important;
+  }
+
+  .logo,
+  .card > h1,
+  .card > h2,
+  .sub,
+  .titulo-compras,
+  .zona-menu,
+  .botao,
+  .aviso-calculo {
+    display: none !important;
+  }
+
+  .cabecalho-impressao {
+    display: block !important;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .cabecalho-impressao h1 {
+    margin-bottom: 4px;
+  }
+
+  .cabecalho-impressao p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .resumo-menu-impressao {
+    display: block !important;
+    margin: 16px 0;
+    font-size: 16px;
+  }
+
+  .resumo-compras {
+    background: white !important;
+    border: 1px solid #ddd;
+  }
+
+  .grupo-compras {
+    page-break-inside: avoid;
+  }
+
+  .item-check {
+    background: white !important;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    padding: 8px 0;
+  }
+
+  .item-check input {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #555;
+  }
+
+  .item-check input:checked::after {
+    content: "✓";
+    display: block;
+    font-size: 13px;
+    line-height: 12px;
+    text-align: center;
+  }
+}

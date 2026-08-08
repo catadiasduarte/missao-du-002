@@ -1,7 +1,31 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 function Compras({ convidados }) {
   const [menu, setMenu] = useState("churrasco");
+
+  const [comprados, setComprados] = useState(() => {
+    const guardados = localStorage.getItem("compras-concluidas");
+    return guardados ? JSON.parse(guardados) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      "compras-concluidas",
+      JSON.stringify(comprados)
+    );
+  }, [comprados]);
+
+  function alternarComprado(id) {
+    setComprados((atuais) =>
+      atuais.includes(id)
+        ? atuais.filter((item) => item !== id)
+        : [...atuais, id]
+    );
+  }
+
+  function exportarPDF() {
+    window.print();
+  }
 
   const confirmados = convidados.filter(
     (convidado) => convidado.estado === "confirmado"
@@ -22,9 +46,6 @@ function Compras({ convidados }) {
     0
   );
 
-  // 1 adulto = 1 porção
-  // 1 criança = 0,6 porção
-  // bebés não entram no cálculo principal
   const porcoes = adultos + criancas * 0.6;
 
   function cima(valor, casas = 1) {
@@ -36,7 +57,6 @@ function Compras({ convidados }) {
   // CHURRASCO
   // =========================
 
-  // Cerca de 300 g de carne por porção equivalente
   const carneTotal = porcoes * 0.3;
 
   const febrasEntremeada = cima(carneTotal * 0.35);
@@ -63,12 +83,10 @@ function Compras({ convidados }) {
     porcoes > 0 ? Math.max(1, Math.ceil(porcoes / 10)) : 0;
 
   // =========================
-  // COMUM AOS DOIS MENUS
+  // COMUM
   // =========================
 
-  // Cerca de 60 g de pão por porção equivalente
   const pao = cima(porcoes * 0.06);
-
   const batatasFritas = cima(porcoes * 0.05);
   const fruta = cima(porcoes * 0.15);
   const bolo = cima(porcoes * 0.1);
@@ -77,17 +95,228 @@ function Compras({ convidados }) {
   // BEBIDAS
   // =========================
 
-  // Quantidades intermédias porque nem toda a gente bebe de tudo
   const refrigerantes = cima(
     adultos * 0.2 + criancas * 0.4
   );
 
-  const cerveja = Math.ceil(adultos * 2); // minis
+  const cerveja = Math.ceil(adultos * 2);
   const sangria = cima(adultos * 0.12);
+
+  const itens = useMemo(() => {
+    const comuns = [
+      {
+        id: "pao",
+        categoria: "🥖 Outros",
+        nome: "Pão",
+        quantidade: `${pao} kg`,
+      },
+      {
+        id: "batatas-fritas",
+        categoria: "🥖 Outros",
+        nome: "Batatas fritas",
+        quantidade: `${batatasFritas} kg`,
+      },
+      {
+        id: "fruta",
+        categoria: "🥖 Outros",
+        nome: "Fruta",
+        quantidade: `${fruta} kg`,
+      },
+      {
+        id: "bolo",
+        categoria: "🥖 Outros",
+        nome: "Bolo de aniversário",
+        quantidade: `${bolo} kg`,
+      },
+      {
+        id: "refrigerantes",
+        categoria: "🍹 Bebidas",
+        nome: "Refrigerantes / sumos",
+        quantidade: `${refrigerantes} L`,
+      },
+      {
+        id: "cerveja",
+        categoria: "🍹 Bebidas",
+        nome: "Cerveja (minis)",
+        quantidade: `${cerveja} unidades`,
+      },
+      {
+        id: "sangria",
+        categoria: "🍹 Bebidas",
+        nome: "Sangria",
+        quantidade: `${sangria} L`,
+      },
+    ];
+
+    if (menu === "churrasco") {
+      return [
+        {
+          id: "febras-entremeada",
+          categoria: "🔥 Churrasco",
+          nome: "Febras / entremeada",
+          quantidade: `${febrasEntremeada} kg`,
+        },
+        {
+          id: "frango",
+          categoria: "🔥 Churrasco",
+          nome: "Frango",
+          quantidade: `${frango} kg`,
+        },
+        {
+          id: "salsichas",
+          categoria: "🔥 Churrasco",
+          nome: "Salsichas",
+          quantidade: `${salsichas} kg`,
+        },
+        {
+          id: "outra-carne",
+          categoria: "🔥 Churrasco",
+          nome: "Outra carne",
+          quantidade: `${outraCarne} kg`,
+        },
+        {
+          id: "arroz",
+          categoria: "🍚 Acompanhamentos",
+          nome: "Arroz",
+          quantidade: `${arroz} kg`,
+        },
+        {
+          id: "feijao-preto",
+          categoria: "🍚 Acompanhamentos",
+          nome: "Feijão preto",
+          quantidade: `${feijaoPreto} kg`,
+        },
+        {
+          id: "farofa",
+          categoria: "🍚 Acompanhamentos",
+          nome: "Farofa",
+          quantidade: `${farofa} kg`,
+        },
+        ...comuns,
+      ];
+    }
+
+    return [
+      {
+        id: "tabuleiros",
+        categoria: "🥘 Empadão",
+        nome: "Tabuleiros",
+        quantidade: `${tabuleiros}`,
+      },
+      {
+        id: "carne-picada",
+        categoria: "🥘 Empadão",
+        nome: "Carne picada",
+        quantidade: `${carnePicada} kg`,
+      },
+      {
+        id: "batata-pure",
+        categoria: "🥘 Empadão",
+        nome: "Batatas para puré",
+        quantidade: `${batataPure} kg`,
+      },
+      {
+        id: "leite",
+        categoria: "🥘 Empadão",
+        nome: "Leite",
+        quantidade: `${leite} L`,
+      },
+      {
+        id: "manteiga",
+        categoria: "🥘 Empadão",
+        nome: "Manteiga",
+        quantidade: `${manteiga} g`,
+      },
+      {
+        id: "cebolas",
+        categoria: "🥘 Empadão",
+        nome: "Cebolas",
+        quantidade: `${cebolas}`,
+      },
+      {
+        id: "polpa-tomate",
+        categoria: "🥘 Empadão",
+        nome: "Polpa de tomate",
+        quantidade: `${polpaTomate} g`,
+      },
+      ...comuns,
+    ];
+  }, [
+    menu,
+    pao,
+    batatasFritas,
+    fruta,
+    bolo,
+    refrigerantes,
+    cerveja,
+    sangria,
+    febrasEntremeada,
+    frango,
+    salsichas,
+    outraCarne,
+    arroz,
+    feijaoPreto,
+    farofa,
+    tabuleiros,
+    carnePicada,
+    batataPure,
+    leite,
+    manteiga,
+    cebolas,
+    polpaTomate,
+  ]);
+
+  const porComprar = itens.filter(
+    (item) => !comprados.includes(item.id)
+  );
+
+  const jaComprados = itens.filter(
+    (item) => comprados.includes(item.id)
+  );
+
+  function ListaItens({ titulo, itensLista, comprado }) {
+    if (itensLista.length === 0) return null;
+
+    return (
+      <div className="grupo-compras">
+        <h3>{titulo}</h3>
+
+        {itensLista.map((item) => (
+          <div
+            className={`item-check ${
+              comprado ? "item-comprado" : ""
+            }`}
+            key={item.id}
+            onClick={() => alternarComprado(item.id)}
+          >
+            <span className="item-nome">
+              <input
+                type="checkbox"
+                checked={comprado}
+                readOnly
+              />
+
+              <span>
+                <small>{item.categoria}</small>
+                {item.nome}
+              </span>
+            </span>
+
+            <strong>{item.quantidade}</strong>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="compras">
-      <h2>🛒 Lista de Compras</h2>
+      <div className="cabecalho-impressao">
+        <h1>✈️ Missão DU-002</h1>
+        <p>Lista de Compras</p>
+      </div>
+
+      <h2 className="titulo-compras">🛒 Lista de Compras</h2>
 
       <div className="resumo-compras">
         <strong>✅ Cálculo para convidados confirmados</strong>
@@ -105,22 +334,24 @@ function Compras({ convidados }) {
         </p>
       </div>
 
-      <h3>🍽️ Escolher menu</h3>
+      <div className="zona-menu">
+        <h3>🍽️ Escolher menu</h3>
 
-      <div className="seletor-menu">
-        <button
-          className={menu === "churrasco" ? "menu-ativo" : ""}
-          onClick={() => setMenu("churrasco")}
-        >
-          🔥 Churrasco
-        </button>
+        <div className="seletor-menu">
+          <button
+            className={menu === "churrasco" ? "menu-ativo" : ""}
+            onClick={() => setMenu("churrasco")}
+          >
+            🔥 Churrasco
+          </button>
 
-        <button
-          className={menu === "empadao" ? "menu-ativo" : ""}
-          onClick={() => setMenu("empadao")}
-        >
-          🥘 Empadão
-        </button>
+          <button
+            className={menu === "empadao" ? "menu-ativo" : ""}
+            onClick={() => setMenu("empadao")}
+          >
+            🥘 Empadão
+          </button>
+        </div>
       </div>
 
       {porcoes === 0 ? (
@@ -129,146 +360,37 @@ function Compras({ convidados }) {
         </div>
       ) : (
         <>
-          {menu === "churrasco" && (
-            <>
-              <div className="lista-compras">
-                <h3>🔥 Churrasco misto</h3>
-
-                <div>
-                  🥩 Febras / entremeada
-                  <strong>{febrasEntremeada} kg</strong>
-                </div>
-
-                <div>
-                  🍗 Frango
-                  <strong>{frango} kg</strong>
-                </div>
-
-                <div>
-                  🌭 Salsichas
-                  <strong>{salsichas} kg</strong>
-                </div>
-
-                <div>
-                  🥩 Outra carne
-                  <strong>{outraCarne} kg</strong>
-                </div>
-
-                <div className="total-destaque">
-                  🔥 Total de carne
-                  <strong>{cima(carneTotal)} kg</strong>
-                </div>
-              </div>
-
-              <div className="lista-compras">
-                <h3>🍚 Acompanhamentos</h3>
-
-                <div>
-                  🍚 Arroz
-                  <strong>{arroz} kg</strong>
-                </div>
-
-                <div>
-                  🫘 Feijão preto
-                  <strong>{feijaoPreto} kg</strong>
-                </div>
-
-                <div>
-                  🌽 Farofa
-                  <strong>{farofa} kg</strong>
-                </div>
-              </div>
-            </>
-          )}
-
-          {menu === "empadao" && (
-            <div className="lista-compras">
-              <h3>🥘 Empadão de carne</h3>
-
-              <div>
-                🍽️ Tabuleiros
-                <strong>{tabuleiros}</strong>
-              </div>
-
-              <div>
-                🥩 Carne picada
-                <strong>{carnePicada} kg</strong>
-              </div>
-
-              <div>
-                🥔 Batatas para puré
-                <strong>{batataPure} kg</strong>
-              </div>
-
-              <div>
-                🥛 Leite
-                <strong>{leite} L</strong>
-              </div>
-
-              <div>
-                🧈 Manteiga
-                <strong>{manteiga} g</strong>
-              </div>
-
-              <div>
-                🧅 Cebolas
-                <strong>{cebolas}</strong>
-              </div>
-
-              <div>
-                🍅 Polpa de tomate
-                <strong>{polpaTomate} g</strong>
-              </div>
-            </div>
-          )}
-
-          <div className="lista-compras">
-            <h3>🥖 Para os dois menus</h3>
-
-            <div>
-              🥖 Pão
-              <strong>{pao} kg</strong>
-            </div>
-
-            <div>
-              🥔 Batatas fritas
-              <strong>{batatasFritas} kg</strong>
-            </div>
-
-            <div>
-              🍉 Fruta
-              <strong>{fruta} kg</strong>
-            </div>
-
-            <div>
-              🎂 Bolo de aniversário
-              <strong>{bolo} kg</strong>
-            </div>
+          <div className="resumo-menu-impressao">
+            Menu:{" "}
+            <strong>
+              {menu === "churrasco"
+                ? "🔥 Churrasco"
+                : "🥘 Empadão"}
+            </strong>
           </div>
 
-          <div className="lista-compras">
-            <h3>🍹 Bebidas</h3>
+          <ListaItens
+            titulo="🛒 Por comprar"
+            itensLista={porComprar}
+            comprado={false}
+          />
 
-            <div>
-              🥤 Refrigerantes / sumos
-              <strong>{refrigerantes} L</strong>
-            </div>
+          <ListaItens
+            titulo="✅ Já comprado"
+            itensLista={jaComprados}
+            comprado={true}
+          />
 
-            <div>
-              🍺 Cerveja (minis)
-              <strong>{cerveja} unidades</strong>
-            </div>
-
-            <div>
-              🍷 Sangria
-              <strong>{sangria} L</strong>
-            </div>
-          </div>
+          <button
+            className="botao botao-pdf"
+            onClick={exportarPDF}
+          >
+            📄 Exportar lista para PDF
+          </button>
 
           <p className="aviso-calculo">
-            💡 As quantidades são estimativas para planeamento.
-            Podemos ajustá-las ao apetite dos convidados e à forma como vais
-            servir a comida.
+            💡 As quantidades são estimativas para planeamento e
+            atualizam automaticamente com os convidados confirmados.
           </p>
         </>
       )}

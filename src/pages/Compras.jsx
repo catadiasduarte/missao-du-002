@@ -2,37 +2,30 @@ import { useState } from "react";
 
 function Compras({ convidados }) {
   const [menu, setMenu] = useState("churrasco");
-  const [incluirPendentes, setIncluirPendentes] = useState(false);
 
-  const pessoasIncluidas = convidados.filter((convidado) => {
-    if (convidado.estado === "confirmado") return true;
+  const confirmados = convidados.filter(
+    (convidado) => convidado.estado === "confirmado"
+  );
 
-    if (incluirPendentes && convidado.estado === "pendente") {
-      return true;
-    }
-
-    return false;
-  });
-
-  const adultos = pessoasIncluidas.reduce(
+  const adultos = confirmados.reduce(
     (total, convidado) => total + Number(convidado.adultos || 0),
     0
   );
 
-  const criancas = pessoasIncluidas.reduce(
+  const criancas = confirmados.reduce(
     (total, convidado) => total + Number(convidado.criancas || 0),
     0
   );
 
-  const bebes = pessoasIncluidas.reduce(
+  const bebes = confirmados.reduce(
     (total, convidado) => total + Number(convidado.bebes || 0),
     0
   );
 
-  // Para comida:
-  // 1 adulto = 1 pessoa
-  // 1 criança = 0.6 pessoa
-  // bebés não entram no cálculo principal
+  // Para os cálculos de comida:
+  // adulto = 1
+  // criança = 0.6
+  // bebé = não entra no cálculo principal
   const equivalentes = adultos + criancas * 0.6;
 
   function arredondar(valor, casas = 1) {
@@ -40,7 +33,7 @@ function Compras({ convidados }) {
     return Math.ceil(valor * multiplicador) / multiplicador;
   }
 
-  // COMUM AOS DOIS MENUS
+  // Itens comuns
   const pao = Math.ceil(equivalentes * 1.2);
   const batatasFritas = arredondar(equivalentes * 0.06);
   const fruta = arredondar(equivalentes * 0.15);
@@ -50,7 +43,7 @@ function Compras({ convidados }) {
   const cerveja = Math.ceil(adultos * 1.5);
   const sangria = arredondar(adultos * 0.3);
 
-  // CHURRASCO
+  // Churrasco
   const carneTotal = equivalentes * 0.4;
 
   const febrasEntremeada = arredondar(carneTotal * 0.35);
@@ -62,7 +55,7 @@ function Compras({ convidados }) {
   const feijaoPreto = arredondar(equivalentes * 0.08);
   const farofa = arredondar(equivalentes * 0.04);
 
-  // EMPADÃO
+  // Empadão
   const carnePicada = arredondar(equivalentes * 0.18);
   const batatasPure = arredondar(equivalentes * 0.3);
   const leite = arredondar(equivalentes * 0.08);
@@ -76,27 +69,15 @@ function Compras({ convidados }) {
       <h2>🛒 Lista de Compras</h2>
 
       <div className="resumo-compras">
-        <strong>Cálculo atual</strong>
+        <strong>Baseado nos convidados confirmados</strong>
 
         <p>
           👨 {adultos} adultos · 🧒 {criancas} crianças · 👶 {bebes} bebés
         </p>
 
         <p>
-          👥 {pessoasIncluidas.length} famílias incluídas
+          ✅ {confirmados.length} famílias confirmadas
         </p>
-      </div>
-
-      <div className="modo-calculo">
-        <label>
-          <input
-            type="checkbox"
-            checked={incluirPendentes}
-            onChange={(e) => setIncluirPendentes(e.target.checked)}
-          />
-
-          Incluir também famílias pendentes
-        </label>
       </div>
 
       <h3>Escolher menu</h3>
@@ -119,7 +100,7 @@ function Compras({ convidados }) {
 
       {equivalentes === 0 ? (
         <div className="sem-pessoas">
-          Ainda não existem pessoas para calcular.
+          Ainda não existem convidados confirmados.
         </div>
       ) : (
         <>
@@ -127,16 +108,35 @@ function Compras({ convidados }) {
             <div className="lista-compras">
               <h3>🔥 Churrasco misto</h3>
 
-              <div>🥩 Febras / entremeada: <strong>{febrasEntremeada} kg</strong></div>
-              <div>🍗 Frango: <strong>{frango} kg</strong></div>
-              <div>🌭 Salsichas: <strong>{salsichas} kg</strong></div>
-              <div>🥩 Outra carne: <strong>{outraCarne} kg</strong></div>
+              <div>
+                🥩 Febras / entremeada: <strong>{febrasEntremeada} kg</strong>
+              </div>
+
+              <div>
+                🍗 Frango: <strong>{frango} kg</strong>
+              </div>
+
+              <div>
+                🌭 Salsichas: <strong>{salsichas} kg</strong>
+              </div>
+
+              <div>
+                🥩 Outra carne: <strong>{outraCarne} kg</strong>
+              </div>
 
               <h3>🍚 Acompanhamentos</h3>
 
-              <div>🍚 Arroz: <strong>{arroz} kg</strong></div>
-              <div>🫘 Feijão preto: <strong>{feijaoPreto} kg</strong></div>
-              <div>🌽 Farofa: <strong>{farofa} kg</strong></div>
+              <div>
+                🍚 Arroz: <strong>{arroz} kg</strong>
+              </div>
+
+              <div>
+                🫘 Feijão preto: <strong>{feijaoPreto} kg</strong>
+              </div>
+
+              <div>
+                🌽 Farofa: <strong>{farofa} kg</strong>
+              </div>
             </div>
           )}
 
@@ -144,36 +144,67 @@ function Compras({ convidados }) {
             <div className="lista-compras">
               <h3>🥘 Empadão de carne</h3>
 
-              <div>🍽️ Tabuleiros: <strong>{tabuleiros}</strong></div>
-              <div>🥩 Carne picada: <strong>{carnePicada} kg</strong></div>
-              <div>🥔 Batatas para puré: <strong>{batatasPure} kg</strong></div>
-              <div>🥛 Leite: <strong>{leite} L</strong></div>
-              <div>🧈 Manteiga: <strong>{manteiga} g</strong></div>
-              <div>🧅 Cebolas: <strong>{cebolas}</strong></div>
-              <div>🍅 Polpa de tomate: <strong>{polpaTomate} g</strong></div>
+              <div>
+                🍽️ Tabuleiros: <strong>{tabuleiros}</strong>
+              </div>
+
+              <div>
+                🥩 Carne picada: <strong>{carnePicada} kg</strong>
+              </div>
+
+              <div>
+                🥔 Batatas para puré: <strong>{batatasPure} kg</strong>
+              </div>
+
+              <div>
+                🥛 Leite: <strong>{leite} L</strong>
+              </div>
+
+              <div>
+                🧈 Manteiga: <strong>{manteiga} g</strong>
+              </div>
+
+              <div>
+                🧅 Cebolas: <strong>{cebolas}</strong>
+              </div>
+
+              <div>
+                🍅 Polpa de tomate: <strong>{polpaTomate} g</strong>
+              </div>
             </div>
           )}
 
           <div className="lista-compras">
             <h3>🥖 Comum aos dois menus</h3>
 
-            <div>🥖 Pão: <strong>{pao} unidades</strong></div>
-            <div>🥔 Batatas fritas: <strong>{batatasFritas} kg</strong></div>
-            <div>🍉 Fruta: <strong>{fruta} kg</strong></div>
-            <div>🎂 Bolo: <strong>{bolo} kg</strong></div>
+            <div>
+              🥖 Pão: <strong>{pao} unidades</strong>
+            </div>
+
+            <div>
+              🥔 Batatas fritas: <strong>{batatasFritas} kg</strong>
+            </div>
+
+            <div>
+              🍉 Fruta: <strong>{fruta} kg</strong>
+            </div>
+
+            <div>
+              🎂 Bolo: <strong>{bolo} kg</strong>
+            </div>
 
             <h3>🍹 Bebidas</h3>
 
-            <div>🍺 Cerveja: <strong>{cerveja} unidades</strong></div>
-            <div>🍷 Sangria: <strong>{sangria} L</strong></div>
+            <div>
+              🍺 Cerveja: <strong>{cerveja} unidades</strong>
+            </div>
+
+            <div>
+              🍷 Sangria: <strong>{sangria} L</strong>
+            </div>
           </div>
         </>
       )}
-
-      <p className="aviso-calculo">
-        ℹ️ Estas quantidades são uma primeira estimativa.
-        Vamos afiná-las ao teu menu e à forma como vais servir a festa.
-      </p>
     </div>
   );
 }

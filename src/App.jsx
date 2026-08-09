@@ -4,6 +4,7 @@ import "./App.css";
 import Dashboard from "./components/Dashboard";
 import Convidados from "./pages/Convidados";
 import Compras from "./pages/Compras";
+import Despesas from "./pages/Despesas";
 
 function App() {
   const [pagina, setPagina] = useState("dashboard");
@@ -84,6 +85,14 @@ function App() {
             >
               🛒 Lista de Compras
             </button>
+
+            <button
+  className="botao"
+  onClick={() => setPagina("despesas")}
+>
+  💰 Despesas
+</button>
+
           </>
         )}
 
@@ -105,18 +114,32 @@ function App() {
           </>
         )}
 
-        {pagina === "compras" && (
-          <>
-            <Compras convidados={convidados} />
+{pagina === "compras" && (
+  <>
+    <Compras convidados={convidados} />
 
-            <button
-              className="botao botao-voltar"
-              onClick={() => setPagina("dashboard")}
-            >
-              ⬅️ Voltar ao painel
-            </button>
-          </>
-        )}
+    <button
+      className="botao botao-voltar"
+      onClick={() => setPagina("dashboard")}
+    >
+      ⬅️ Voltar ao painel
+    </button>
+  </>
+)}
+
+{pagina === "despesas" && (
+  <>
+    <Despesas />
+
+    <button
+      className="botao botao-voltar"
+      onClick={() => setPagina("dashboard")}
+    >
+      ⬅️ Voltar ao painel
+    </button>
+  </>
+)}
+      
 
       </div>
     </div>

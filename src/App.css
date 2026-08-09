@@ -588,3 +588,127 @@ h2 {
     display: none !important;
   }
 }
+.despesas {
+  text-align: left;
+}
+
+.total-despesas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  margin: 18px 0;
+  border-radius: 16px;
+  background: #e8f7ef;
+}
+
+.total-despesas strong {
+  font-size: 24px;
+  color: #267247;
+}
+
+.resumo-categorias {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.resumo-categorias > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f7fbfd;
+  border-radius: 10px;
+}
+
+.nova-fatura {
+  padding: 16px;
+  background: #fff8e8;
+  border-radius: 16px;
+  margin-top: 20px;
+}
+
+.nova-fatura label {
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.nova-fatura input,
+.nova-fatura select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px;
+  border: 1px solid #d5e1e6;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.linha-categoria {
+  display: grid;
+  grid-template-columns: 1fr 100px auto;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.remover-linha {
+  border: none;
+  background: #ffe4e1;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.soma-ok,
+.soma-erro {
+  padding: 12px;
+  margin: 14px 0;
+  border-radius: 10px;
+}
+
+.soma-ok {
+  background: #e7f7ed;
+  color: #267247;
+}
+
+.soma-erro {
+  background: #fff0ef;
+  color: #a64640;
+}
+
+.lista-faturas {
+  margin-top: 26px;
+}
+
+.fatura-card {
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+  background: #f7fbfd;
+}
+
+.fatura-topo {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fatura-categorias {
+  margin-top: 10px;
+}
+
+.fatura-categorias > div {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+.apagar-fatura {
+  margin-top: 10px;
+  border: none;
+  background: #ffe3e1;
+  color: #a43e38;
+  border-radius: 9px;
+  padding: 8px 10px;
+  cursor: pointer;
+}

@@ -17,6 +17,7 @@ function Despesas() {
   const [loja, setLoja] = useState("");
   const [data, setData] = useState("");
   const [totalFatura, setTotalFatura] = useState("");
+  const [faturaEmEdicao, setFaturaEmEdicao] = useState(null);
 
   const [linhas, setLinhas] = useState([
     { categoria: "Descartáveis", valor: "" },
@@ -60,6 +61,20 @@ function Despesas() {
   const diferenca =
     Number(totalFatura || 0) - totalCategorias;
 
+    function editarFatura(fatura) {
+  setFaturaEmEdicao(fatura.id);
+  setLoja(fatura.loja);
+  setData(fatura.data || "");
+  setTotalFatura(String(fatura.total));
+
+  setLinhas(
+    fatura.categorias.map((linha) => ({
+      categoria: linha.categoria,
+      valor: String(linha.valor),
+    }))
+  );
+}
+
   function guardarFatura() {
     if (!loja.trim()) {
       alert("Indica a loja.");
@@ -78,31 +93,48 @@ function Despesas() {
       return;
     }
 
-    const novaFatura = {
+const dadosFatura = {
+  loja: loja.trim(),
+  data,
+  total: Number(totalFatura),
+  categorias: linhas
+    .filter((linha) => Number(linha.valor) > 0)
+    .map((linha) => ({
+      categoria: linha.categoria,
+      valor: Number(linha.valor),
+    })),
+};
+
+if (faturaEmEdicao) {
+  setFaturas(
+    faturas.map((fatura) =>
+      fatura.id === faturaEmEdicao
+        ? { ...fatura, ...dadosFatura }
+        : fatura
+    )
+  );
+} else {
+  setFaturas([
+    ...faturas,
+    {
       id: crypto.randomUUID(),
-      loja: loja.trim(),
-      data,
-      total: Number(totalFatura),
-      categorias: linhas
-        .filter((linha) => Number(linha.valor) > 0)
-        .map((linha) => ({
-          categoria: linha.categoria,
-          valor: Number(linha.valor),
-        })),
-    };
+      ...dadosFatura,
+    },
+  ]);
+}
+setLoja("");
+setData("");
+setTotalFatura("");
 
-    setFaturas([...faturas, novaFatura]);
+setLinhas([
+  {
+    categoria: "Descartáveis",
+    valor: "",
+  },
+]);
 
-    setLoja("");
-    setData("");
-    setTotalFatura("");
-    setLinhas([
-      {
-        categoria: "Descartáveis",
-        valor: "",
-      },
-    ]);
-  }
+setFaturaEmEdicao(null);
+}
 
   function apagarFatura(id) {
     const confirmar = window.confirm(
@@ -263,12 +295,34 @@ function Despesas() {
           )}
         </div>
 
-        <button
-          className="botao"
-          onClick={guardarFatura}
-        >
-          💾 Guardar fatura
-        </button>
+<button
+  className="botao"
+  onClick={guardarFatura}
+>
+  {faturaEmEdicao
+    ? "💾 Guardar alterações"
+    : "💾 Guardar fatura"}
+</button>
+
+{faturaEmEdicao && (
+  <button
+    className="botao-secundario"
+    onClick={() => {
+      setFaturaEmEdicao(null);
+      setLoja("");
+      setData("");
+      setTotalFatura("");
+      setLinhas([
+        {
+          categoria: "Descartáveis",
+          valor: "",
+        },
+      ]);
+    }}
+  >
+    ✖️ Cancelar edição
+  </button>
+)}
       </div>
 
       <div className="lista-faturas">
@@ -305,6 +359,13 @@ function Despesas() {
                   )
                 )}
               </div>
+
+<button
+  className="editar-fatura"
+  onClick={() => editarFatura(fatura)}
+>
+  ✏️ Editar
+</button>
 
               <button
                 className="apagar-fatura"

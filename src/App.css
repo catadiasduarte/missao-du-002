@@ -552,3 +552,39 @@ h2 {
     padding-left: 38px;
   }
 }
+.adicionar-produto {
+  margin-top: 24px;
+  padding: 16px;
+  background: #f7fbfd;
+  border-radius: 14px;
+  text-align: left;
+}
+
+.adicionar-produto h3 {
+  margin-top: 0;
+}
+
+.adicionar-produto form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.adicionar-produto input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #d5e1e6;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.adicionar-produto .botao {
+  width: 100%;
+}
+
+@media print {
+  .adicionar-produto {
+    display: none !important;
+  }
+}

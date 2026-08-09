@@ -3,10 +3,18 @@ import { useEffect, useMemo, useState } from "react";
 function Compras({ convidados }) {
   const [menu, setMenu] = useState("churrasco");
 
-  const [comprados, setComprados] = useState(() => {
-    const guardados = localStorage.getItem("compras-concluidas");
-    return guardados ? JSON.parse(guardados) : [];
-  });
+ const [comprados, setComprados] = useState(() => {
+  const guardados = localStorage.getItem("compras-concluidas");
+  return guardados ? JSON.parse(guardados) : [];
+});
+
+const [produtosManuais, setProdutosManuais] = useState(() => {
+  const guardados = localStorage.getItem("produtos-manuais");
+  return guardados ? JSON.parse(guardados) : [];
+});
+
+const [novoProduto, setNovoProduto] = useState("");
+const [novaQuantidade, setNovaQuantidade] = useState("");
 
   useEffect(() => {
     localStorage.setItem(
@@ -14,6 +22,12 @@ function Compras({ convidados }) {
       JSON.stringify(comprados)
     );
   }, [comprados]);
+  useEffect(() => {
+  localStorage.setItem(
+    "produtos-manuais",
+    JSON.stringify(produtosManuais)
+  );
+}, [produtosManuais]); 
 
   function alternarComprado(id) {
     setComprados((atuais) =>
@@ -22,6 +36,23 @@ function Compras({ convidados }) {
         : [...atuais, id]
     );
   }
+  function adicionarProdutoManual(e) {
+  e.preventDefault();
+
+  if (!novoProduto.trim()) return;
+
+  const produto = {
+    id: `manual-${Date.now()}`,
+    categoria: "➕ Adicionado manualmente",
+    nome: novoProduto.trim(),
+    quantidade: novaQuantidade.trim() || "—",
+  };
+
+  setProdutosManuais((atuais) => [...atuais, produto]);
+
+  setNovoProduto("");
+  setNovaQuantidade("");
+}
 
   function exportarPDF() {
     window.print();
@@ -269,13 +300,15 @@ quantidade: `${pureInstantaneo} kg (${embalagensPure} embalagens de 200 g)`,
     polpaTomate,
   ]);
 
-  const porComprar = itens.filter(
-    (item) => !comprados.includes(item.id)
-  );
+const todosItens = [...itens, ...produtosManuais];
 
-  const jaComprados = itens.filter(
-    (item) => comprados.includes(item.id)
-  );
+const porComprar = todosItens.filter(
+  (item) => !comprados.includes(item.id)
+);
+
+const jaComprados = todosItens.filter(
+  (item) => comprados.includes(item.id)
+);
 
   function ListaItens({ titulo, itensLista, comprado }) {
     if (itensLista.length === 0) return null;
@@ -371,7 +404,29 @@ quantidade: `${pureInstantaneo} kg (${embalagensPure} embalagens de 200 g)`,
                 : "🥘 Empadão"}
             </strong>
           </div>
+<div className="adicionar-produto">
+  <h3>➕ Adicionar produto</h3>
 
+  <form onSubmit={adicionarProdutoManual}>
+    <input
+      type="text"
+      placeholder="Produto (ex.: Carvão)"
+      value={novoProduto}
+      onChange={(e) => setNovoProduto(e.target.value)}
+    />
+
+    <input
+      type="text"
+      placeholder="Quantidade (ex.: 2 sacos)"
+      value={novaQuantidade}
+      onChange={(e) => setNovaQuantidade(e.target.value)}
+    />
+
+    <button type="submit" className="botao">
+      + Adicionar à lista
+    </button>
+  </form>
+</div>
           <ListaItens
             titulo="🛒 Por comprar"
             itensLista={porComprar}

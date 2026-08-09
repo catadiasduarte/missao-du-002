@@ -712,3 +712,102 @@ h2 {
   padding: 8px 10px;
   cursor: pointer;
 }
+.checklist-festa {
+  text-align: left;
+}
+
+.checklist-resumo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 10px;
+  background: #eef9fd;
+  padding: 16px;
+  border-radius: 14px;
+  margin: 18px 0;
+}
+
+.checklist-resumo strong {
+  color: #1677a8;
+  font-size: 20px;
+}
+
+.nova-tarefa {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.nova-tarefa input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d5e1e6;
+  font-size: 16px;
+}
+
+.grupo-checklist {
+  margin-top: 22px;
+}
+
+.tarefa-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  background: #f7fbfd;
+  padding: 12px;
+  border-radius: 11px;
+  margin-bottom: 8px;
+}
+
+.tarefa-item label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.tarefa-item input {
+  width: 18px;
+  height: 18px;
+}
+
+.tarefa-concluida {
+  background: #e7f7ed;
+  opacity: 0.8;
+}
+
+.tarefa-concluida span {
+  text-decoration: line-through;
+}
+
+.apagar-tarefa {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+}
+@media print {
+  .nova-tarefa,
+  .apagar-tarefa,
+  .botao-voltar,
+  .checklist-festa .botao {
+    display: none !important;
+  }
+
+  .checklist-festa {
+    background: white !important;
+  }
+
+  .grupo-checklist {
+    page-break-inside: avoid;
+  }
+
+  .tarefa-item {
+    background: white !important;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+  }
+}

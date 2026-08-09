@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import Convidados from "./pages/Convidados";
 import Compras from "./pages/Compras";
 import Despesas from "./pages/Despesas";
+import Checklist from "./pages/Checklist";
 
 function App() {
   const [pagina, setPagina] = useState("dashboard");
@@ -93,6 +94,13 @@ function App() {
   💰 Despesas
 </button>
 
+<button
+  className="botao"
+  onClick={() => setPagina("checklist")}
+>
+  ✅ Checklist da Festa
+</button>
+
           </>
         )}
 
@@ -139,7 +147,18 @@ function App() {
     </button>
   </>
 )}
-      
+{pagina === "checklist" && (
+  <>
+    <Checklist />
+
+    <button
+      className="botao botao-voltar"
+      onClick={() => setPagina("dashboard")}
+    >
+      ⬅️ Voltar ao painel
+    </button>
+  </>
+)}
 
       </div>
     </div>
